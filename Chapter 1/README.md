@@ -1,2 +1,2 @@
-顺序表(Contiguous List){LineList.cpp}
+顺序表(Sequential List){LineList.cpp}
 单链表(Singly Linked List){LinkList.cpp}
