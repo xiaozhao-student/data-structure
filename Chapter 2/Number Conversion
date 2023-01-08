@@ -1,0 +1,82 @@
+#include <iostream>
+
+#define MAXSIZE 100         //initial space
+#define OK 1
+#define ERROR 0
+
+using namespace std;
+
+typedef int SElemType;
+typedef int Status;
+
+// Stack structure
+typedef struct{
+    SElemType *base;
+    SElemType *top;
+    int stacksize;          //maxsize
+}SqStack;
+
+// Stack Init
+Status InitStack(SqStack &S){
+    S.base = new SElemType[MAXSIZE];
+    if(!S.base){
+        exit(ERROR);
+    }
+    S.top = S.base;
+    S.stacksize = MAXSIZE;
+    return OK;
+}
+
+// Stack Push
+Status Push(SqStack &S, SElemType e){
+    if(S.top - S.base == MAXSIZE){
+        return ERROR;
+    }
+    *S.top++ = e;           //first move,second push
+    return OK;
+}
+
+//Stack Pop
+Status Pop(SqStack &S,SElemType &e){
+    if(S.top == S.base){
+        return ERROR;
+    }
+    e = *--S.top;            //first pop,second move
+
+    return OK;
+}
+
+Status IsNull(SqStack S){
+    if(S.top == S.base){
+        return ERROR;
+    }
+    else{
+        return OK;
+    }
+}
+
+int main(void) {
+    int num_10 = 0;
+    printf("Please input a decimal number: ");
+    scanf("%d", &num_10);
+    SqStack st;
+    st.top = (int *) malloc(10 * sizeof(SElemType));
+    st.base = (int *) malloc(10 * sizeof(SElemType));
+    st.base = NULL;
+    st.top = NULL;
+    InitStack(st);
+    int extra_1 = 1;
+    while(extra_1 != 0){
+        extra_1 = num_10 % 8;
+        num_10 /= 8;
+        Push(st, extra_1);
+    }
+    int extra_2 = 0;
+    printf("The octal number is: ");
+    while(IsNull(st)){
+        Pop(st, extra_2);
+        cout << extra_2;
+    }
+    free(st.base);
+    return 0;
+}
